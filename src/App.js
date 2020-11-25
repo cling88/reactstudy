@@ -7,26 +7,21 @@ import TodoInsert from './components/TodoInsert';
 import TodoList from './components/TodoList';
 
 
-function App() {
-  const [todos, setTodos] = useState([
-    {
-      id: 1,
-      text: 'Study basic react',
-      checked: true
-    },
-    {
-      id: 2,
-      text: 'Styling components',
-      checked: true
-    },
-    {
-      id: 3,
-      text: 'Build Todo application',
+function createBulkTodos(){
+  const array =[];
+  for(let i = 1; i<= 2500; i++){
+    array.push({
+      id: i,
+      text: `할 일 ${i}`,
       checked: false
-    }
-  ])
+    })
+  }
+  return array; 
+}
 
-  const nextId = useRef(4);
+function App() {
+  const [todos, setTodos] = useState(createBulkTodos)
+  const nextId = useRef(2501);
 
   const onInsert = useCallback(text => {
     const todo = {
@@ -34,21 +29,21 @@ function App() {
       text,
       checked: false
     }
-    setTodos(todos.concat(todo));
+    setTodos(todos => todos.concat(todo));
     nextId.current += 1;
-  }, [todos])
+  }, [])
 
-  const onRemove = useCallback(id => {
-    todos.filter(todo => {
-      setTodos(todos.filter(todo => todo.id !== id))
-    })
-  }, [todos])
+  const onRemove = useCallback(
+    id => {
+      setTodos(todos => todos.filter(todo => todo.id !== id))
+  }, [])
 
-  const onToggle = useCallback(id => {
-    setTodos(
+  const onToggle = useCallback(
+    id => {
+    setTodos( todos =>
       todos.map(todo => todo.id === id ? {...todo, checked: !todo.checked} : todo)
     )
-  })
+  }, [])
 
   return (
     <div className="App">
