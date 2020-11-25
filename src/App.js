@@ -39,16 +39,14 @@ function App() {
   }, [todos])
 
   const onRemove = useCallback(id => {
-    todos.filter(todo => {
-      setTodos(todos.filter(todo => todo.id !== id))
-    })
+    todos.filter(todo => setTodos(todos.filter(todo => todo.id !== id)))
   }, [todos])
 
   const onToggle = useCallback(id => {
     setTodos(
       todos.map(todo => todo.id === id ? {...todo, checked: !todo.checked} : todo)
     )
-  })
+  }, [todos])
 
   return (
     <div className="App">
