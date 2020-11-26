@@ -1,59 +1,108 @@
-
-import { useState,useRef, useCallback } from 'react';
-
-import TodoTemplate from './components/TodoTemplate';
-// components
-import TodoInsert from './components/TodoInsert';
-import TodoList from './components/TodoList';
-
+import { useRef, useCallback, useState } from 'react'
+import produce from 'immer'
 
 function App() {
-  const [todos, setTodos] = useState([
-    {
-      id: 1,
-      text: 'Study basic react',
-      checked: true
+  const nextId = useRef(1);
+  const [form , setForm] = useState({name: '', username: ''})
+  const [data, setData] = useState({
+    array: [],
+    uselessValue: null
+
+  })
+
+  // const onChange = useCallback(
+  //   e => {
+  //     const { name, value } = e.target;
+  //     setForm({
+  //       ...form,
+  //       [name] : [value]
+  //     })
+  //   }, [form]
+  // )
+
+  const onChange = useCallback(
+    e => {
+      const { name, value } = e.target;
+      // setForm({
+      //   ...form,
+      //   [name] : [value]
+      // })
+      setForm(produce(draft => {
+        draft[name] = value
+      }))
+    }, []
+  )
+
+  const onSubmit = useCallback(
+    e => {
+      e.preventDefault();
+      const info ={
+        id: nextId.current,
+        name: form.name,
+        username: form.username
+      }
+
+      // setData({
+      //   ...data,
+      //   array: data.array.concat(info)
+      // })
+      setData(produce(draft => {
+        draft.array.push(info)
+      }))
+
+      setForm({
+        name: '',
+        username: ''
+      })
+
+      nextId.current += 1
+    }, [form.name, form.username])
+
+  const onRemove = useCallback(
+    id => {
+      // setData({
+      //   ...data,
+      //   array: data.array.filter(info => info.id !== id)
+      // })
+      setData(produce(draft => {
+        draft.array.splice(draft.array.findIndex(info => info.id === id), 1)
+      }))
     },
-    {
-      id: 2,
-      text: 'Styling components',
-      checked: true
-    },
-    {
-      id: 3,
-      text: 'Build Todo application',
-      checked: false
-    }
-  ])
+    [],
+  )
 
-  const nextId = useRef(4);
-
-  const onInsert = useCallback(text => {
-    const todo = {
-      id: nextId.current,
-      text,
-      checked: false
-    }
-    setTodos(todos.concat(todo));
-    nextId.current += 1;
-  }, [todos])
-
-  const onRemove = useCallback(id => {
-    todos.filter(todo => setTodos(todos.filter(todo => todo.id !== id)))
-  }, [todos])
-
-  const onToggle = useCallback(id => {
-    setTodos(
-      todos.map(todo => todo.id === id ? {...todo, checked: !todo.checked} : todo)
-    )
-  }, [todos])
 
   return (
     <div className="App">
-      <TodoTemplate>
-        <TodoInsert onInsert={onInsert} />
-        <TodoList todos={todos} onRemove={onRemove} onToggle={onToggle}/>
-      </TodoTemplate>
+      <form onSubmit={onSubmit}>
+          <input 
+            type="text"
+            name="username"
+            placeholder="username"
+            value={form.username}
+            onChange={onChange}
+          />
+          <input 
+            type="text"
+            name="name"
+            placeholder="name"
+            value={form.name}
+            onChange={onChange}
+          />
+          <button type="submit">Register</button>
+      </form>
+      <div>
+        <ul>
+          { data.array.map(info => (
+              <li 
+                key={info.id}
+                onClick={() => onRemove(info.id)}
+              >
+                { info.username } ({info.name})
+              </li>
+          )) }
+        </ul>
+      </div>
     </div>
   );
 }
