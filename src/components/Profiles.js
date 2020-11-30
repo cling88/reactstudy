@@ -1,9 +1,6 @@
 import React from 'react'
 import { Link, Route, NavLink } from 'react-router-dom'
 import Profile from './Profile'
-
-
-
 function Profiles() {
     const activeStyles = {
         background: 'black',
