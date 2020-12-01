@@ -1,44 +1,25 @@
 
-import React from 'react'
-import { Route, Link, Switch } from 'react-router-dom'
+import React, { useState, useCallback } from 'react'
+import { Route } from 'react-router-dom'
+import axios from 'axios';
+import NewsPage from './pages/NewsPage'
 
-// components
-import Home from './components/Home'
-import About from './components/About'
-import Profile from './components/Profile'
-import Profiles from './components/Profiles'
-import HistorySample from './components/HistorySample'
+// import NewsList from './components/NewsList'
+// import Categories from './components/Categories'
+// function App() {
+//   const [category, setCategory] = useState('all');
+//   const onSelect = useCallback(category => {
+//     setCategory(category)
+//   }, [])
+//   return (
+//     <div className="App">
+//       <Categories category={category} onSelect={onSelect}/>
+//       <NewsList category={category} />
+//     </div>
+//   );
+// }
 
-function App() {
-  return (
-    <div className="App">
-      <ul>
-        <li><Link to="/" >HOME</Link></li>
-        <li><Link to="/about?detail=true" >About</Link></li>
-        <li><Link to="/profiles" >Profiles</Link></li>
-        <li><Link to="/historySample">HistorySample</Link></li>
-        {/* <li><Link to="/profile/user1" >user1 profile</Link></li>
-        <li><Link to="/profile/user2" >user2 profile</Link></li> */}
-      </ul>
-      <hr/>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path={['/about', '/info']} component={About} />
-        <Route path="/profiles" component={Profiles} />
-        <Route exact path="/historySample" component={HistorySample} />
-        <Route
-          render={({location}) => {
-            return(
-              <div>
-                <h2>이 페이지는 존재하지 않습니다</h2>
-                <p>{ location.pathname }</p>
-              </div>
-            )  
-          }}
-        />
-      </Switch>
-    </div>
-  );
+const App = () => {
+  return <Route path="/:category?" component={NewsPage}/>
 }
-
 export default App;
