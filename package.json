@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/cling88/reactstudy/issues"
   },
-  "homepage": "https://github.com/cling88/reactstudy#readme"
+  "homepage": "https://github.com/cling88/reactstudy#readme",
+  "dependencies": {
+    "redux": "^4.0.5"
+  }
 }
