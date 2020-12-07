@@ -14,7 +14,7 @@ const TodoContainer = ({
     remove 
 }) => {
     return (
-        <todos
+        <Todos
             input={input}
             todos={todos}
             onChangeInput={changeInput}

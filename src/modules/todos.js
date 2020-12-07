@@ -5,8 +5,8 @@ const TOGGLE = 'todos/TOGGLE'
 const REMOVE = 'todos/REMOVE'
 
 // actionFunctions
-let id = 3;
 export const changeInput = input => ({type: CHANGE_INPUT, input });
+let id = 3; 
 export const insert = text => ({
     type: INSERT,
     todo: {
@@ -36,7 +36,7 @@ const initialState = {
 }
 
 // 리듀서 함수
-function todos(state= initialState, action) {
+function todos(state = initialState, action) {
     switch(action.type) {
         case CHANGE_INPUT: 
             return {
