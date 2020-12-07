@@ -6,7 +6,7 @@ import Counter from '../components/Counter'
 // actions
 import { increase, decrease } from '../modules/counter'
 
-const CounterContainer = () => {  /* { number, increase, decrease } */
+const CounterContainer02 = () => {  /* { number, increase, decrease } */
     const number = useSelector(state => state.counter.number);
     const dispatch = useDispatch();
     return (
@@ -17,4 +17,4 @@ const CounterContainer = () => {  /* { number, increase, decrease } */
         />
     )
 }
-export default CounterContainer;
+export default CounterContainer02;
