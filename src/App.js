@@ -4,7 +4,7 @@ import SampleContainer from './container/SampleContainer'
 function App() {
   return (
     <div className="App">
-      {/* <CounterContainer/> */}
+      <CounterContainer/>
       <SampleContainer/>
     </div>
   );
