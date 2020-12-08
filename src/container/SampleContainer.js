@@ -11,10 +11,21 @@ const SampleContainer = ({
     loadingPost,
     loadingUsers
 }) => {
+    // useEffect(() => {
+    //     getPosts(1)
+    //     getUsers(1)
+    // }, [getPosts, getUsers])
 
     useEffect(() => {
-        getPosts(1)
-        getUsers(1)
+        const fn = async () => {
+            try {
+                await getPosts(1);
+                await getUsers(1);
+            } catch(e) {
+                console.log(e)
+            }
+        }
+        fn();
     }, [getPosts, getUsers])
 
     return (
@@ -27,11 +38,13 @@ const SampleContainer = ({
     )
 }
 
-export default connect(({sample}) => ({
+export default connect(({sample, loading}) => ({
     post: sample.post,
     users: sample.users,
-    loadingPost: sample.loading.GET_POST,
-    loadingUsers: sample.loading.GET_USER
+    // loadingPost: sample.loading.GET_POST,
+    // loadingUsers: sample.loading.GET_USER
+    loadingPost: loading['sample/GET_POST'],
+    loadingUsers: loading['sample/GET_USERS']
 }),{
     getPosts,
     getUsers
