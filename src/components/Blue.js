@@ -1,5 +1,5 @@
 import React from 'react'
-import './Blue.css'
+// import './Blue.css'
 
 function Blue() {
     return <div class="Blue">Blue</div>
